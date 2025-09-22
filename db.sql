@@ -5,31 +5,56 @@ USE gym_management;
 -- ======================
 -- Admin Table
 -- ======================
-CREATE TABLE IF NOT EXISTS admin (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- CREATE TABLE IF NOT EXISTS admin (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     name VARCHAR(100) NOT NULL,
+--     email VARCHAR(100) NOT NULL UNIQUE,
+--     password VARCHAR(255) NOT NULL,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
 
-INSERT INTO admin (name, email, password) VALUES
-('Admin', 'admin@gym.com', MD5('admin123'));
+-- INSERT INTO admin (name, email, password) VALUES
+-- ('Admin', 'admin@gym.com', MD5('admin123'));
 
 -- ======================
 -- Users Table
 -- ======================
-CREATE TABLE IF NOT EXISTS users (
+-- CREATE TABLE IF NOT EXISTS users (
+--     id INT AUTO_INCREMENT PRIMARY KEY,
+--     name VARCHAR(100) NOT NULL,
+--     email VARCHAR(100) NOT NULL UNIQUE,
+--     password VARCHAR(255) NOT NULL,
+--     role ENUM('user','admin') DEFAULT 'user',
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
+
+-- INSERT INTO users (name, email, password, role) VALUES
+-- ('Sample User', 'user@gym.com', MD5('user123'), 'user');
+
+
+
+CREATE TABLE admins (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
+    username VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('user','admin') DEFAULT 'user',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO users (name, email, password, role) VALUES
-('Sample User', 'user@gym.com', MD5('user123'), 'user');
+-- User table
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert default admin (password = admin123)
+INSERT INTO admins (username, password) 
+VALUES ('admin', '$2y$10$2hdGHcZbUIV0jU/b6QUfEOd5fUMPE7HgX9ssM/ApBMtPUp1z7w3rS');
+
+-- Insert default user (password = user123)
+INSERT INTO users (username, password) 
+VALUES ('user', '$2y$10$SKzUMvS9lfcdwMG/kGu4zOzXKgQz3/lffSd8OhnoCCPbxIh3BhN9S');
 
 -- ======================
 -- Members Table
